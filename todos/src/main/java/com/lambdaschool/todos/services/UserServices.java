@@ -2,13 +2,17 @@ package com.lambdaschool.todos.services;
 
 import com.lambdaschool.todos.models.User;
 import com.lambdaschool.todos.views.UserNameCountTodos;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 /**
  * The Service that works with User Model.
  */
-public interface UserService
+@Transactional
+@Service(value = "userServices")
+public interface UserServices
 {
     /**
      * Returns a list of all the Users

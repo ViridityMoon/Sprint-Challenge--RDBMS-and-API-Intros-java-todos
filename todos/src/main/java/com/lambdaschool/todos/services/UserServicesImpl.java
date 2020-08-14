@@ -15,8 +15,8 @@ import java.util.List;
  * Implements the Userservice Interface
  */
 @Transactional
-@Service(value = "userService")
-public class UserServiceImpl implements UserService
+@Service(value = "userServices")
+public class UserServicesImpl implements UserServices
 {
     /**
      * Connects this service to the User table.
@@ -44,9 +44,7 @@ public class UserServiceImpl implements UserService
          * findAll returns an iterator set.
          * iterate over the iterator set and add each element to an array list.
          */
-        userrepos.findAll()
-            .iterator()
-            .forEachRemaining(list::add);
+        userrepos.findAll().iterator().forEachRemaining(list::add);
         return list;
     }
 
@@ -77,6 +75,8 @@ public class UserServiceImpl implements UserService
     @Override
     public List<UserNameCountTodos> getCountUserTodos()
     {
-        return null;
+        List<UserNameCountTodos> myList = userrepos.getCountUserTodos();
+
+        return myList;
     }
 }

@@ -1,7 +1,7 @@
 package com.lambdaschool.todos.controllers;
 
 import com.lambdaschool.todos.models.User;
-import com.lambdaschool.todos.services.UserService;
+import com.lambdaschool.todos.services.UserServices;
 import com.lambdaschool.todos.views.UserNameCountTodos;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -26,22 +26,20 @@ public class UserController
      * Using the User service to process user data
      */
     @Autowired
-    private UserService userService;
+    private UserServices userServices;
 
     /**
      * Returns a list of all users
      * <br>Example: <a href="http://localhost:2019/users/users">http://localhost:2019/users/users</a>
      *
-     * @return JSON list of all users with a status of OK
-     * @see UserService#findAll() UserService.findAll()
+     * // @return JSON list of all users with a status of OK
+     * // @see UserService#findAll() UserService.findAll()
      */
-    @GetMapping(value = "/users",
-        produces = {"application/json"})
+    @GetMapping(value = "/users", produces = {"application/json"})
     public ResponseEntity<?> listAllUsers()
     {
-        List<User> myUsers = userService.findAll();
-        return new ResponseEntity<>(myUsers,
-            HttpStatus.OK);
+        List<User> myUsers = userServices.findAll();
+        return new ResponseEntity<>(myUsers, HttpStatus.OK);
     }
 
     /**
@@ -50,7 +48,7 @@ public class UserController
      *
      * @param userId The primary key of the user you seek
      * @return JSON object of the user you seek
-     * @see UserService#findUserById(long) UserService.findUserById(long)
+     * @see UserServices#findUserById(long) UserService.findUserById(long)
      */
     @GetMapping(value = "/user/{userId}",
         produces = {"application/json"})
@@ -58,7 +56,7 @@ public class UserController
         @PathVariable
             Long userId)
     {
-        User u = userService.findUserById(userId);
+        User u = userServices.findUserById(userId);
         return new ResponseEntity<>(u,
             HttpStatus.OK);
     }
@@ -70,7 +68,7 @@ public class UserController
      * @param newuser A complete new user to add including todos.
      * @return A location header with the URI to the newly created user and a status of CREATED
      * @throws URISyntaxException Exception if something does not work in creating the location header
-     * @see UserService#save(User) UserService.save(User)
+     * @see UserServices#save(User) UserService.save(User)
      */
     @PostMapping(value = "/user",
         consumes = {"application/json"})
@@ -80,7 +78,7 @@ public class UserController
             User newuser) throws URISyntaxException
     {
         newuser.setUserid(0);
-        newuser = userService.save(newuser);
+        newuser = userServices.save(newuser);
 
         // set the location header for the newly created resource
         HttpHeaders responseHeaders = new HttpHeaders();
@@ -107,7 +105,7 @@ public class UserController
         @PathVariable
             long id)
     {
-        userService.delete(id);
+        userServices.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -119,7 +117,7 @@ public class UserController
     @GetMapping(value = "/users/todos", produces = {"application/json"})
     public ResponseEntity<?> getUserNameCountTodos()
     {
-        List<UserNameCountTodos> myList = userService.getCountUserTodos();
+        List<UserNameCountTodos> myList = userServices.getCountUserTodos();
         return new ResponseEntity<>(myList, HttpStatus.OK);
     }
 }
