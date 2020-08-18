@@ -6,7 +6,8 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "todos")
-public class Todo
+@JsonIgnoreProperties(value = {"hasvalueforcompleted"})
+public class Todo extends Auditable
 {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -15,12 +16,14 @@ public class Todo
     @Column(nullable = false)
     private String description;
 
+    @Transient
+    public boolean hasvalueforcompleted;
     private boolean completed;
 
     @ManyToOne
     @JoinColumn(name = "user",
                 nullable = false)
-    @JsonIgnoreProperties(value = "todos")
+    @JsonIgnoreProperties(value = "todos", allowSetters = true)
     private User user;
 
     public Todo()
@@ -31,6 +34,7 @@ public class Todo
     {
         this.user = user;
         this.description = description;
+        this.completed = false;
     }
 
 
@@ -55,13 +59,14 @@ public class Todo
         this.description = description;
     }
 
-    public boolean isCompleted()
+    public boolean getCompleted()
     {
         return completed;
     }
 
     public void setCompleted(boolean completed)
     {
+        hasvalueforcompleted = true;
         this.completed = completed;
     }
 

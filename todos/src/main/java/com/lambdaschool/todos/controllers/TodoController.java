@@ -1,13 +1,11 @@
 package com.lambdaschool.todos.controllers;
 
-import com.lambdaschool.todos.services.TodosService;
+import com.lambdaschool.todos.models.Todo;
+import com.lambdaschool.todos.services.TodoServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * The entry point for client to access user, todos combinations
@@ -20,7 +18,7 @@ public class TodoController
      * Using the Todos service to process user, todos combinations data
      */
     @Autowired
-    TodosService todosService;
+    private TodoServices todoServices;
 
     /**
      * Given the todo id, mark the task as complete
@@ -32,7 +30,7 @@ public class TodoController
     @PatchMapping(value = "/todo/{todoid}")
     public ResponseEntity<?> completeTodo(@PathVariable long todoid)
     {
-        todosService.markComplete(todoid);
+        todoServices.markComplete(todoid);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

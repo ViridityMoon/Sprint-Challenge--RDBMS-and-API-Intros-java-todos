@@ -13,7 +13,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "users")
-public class User
+public class User extends Auditable
 {
     /**
      * The primary key (long) of the users table.
@@ -56,6 +56,15 @@ public class User
     {
     }
 
+    public User(String username,
+                String password,
+                @Email String primaryemail)
+    {
+        this.username = username;
+        this.password = password;
+        this.primaryemail = primaryemail;
+    }
+
     /**
      * Given the params, create a new user object
      * <p>
@@ -65,15 +74,17 @@ public class User
      * @param password     The password (String) of the user
      * @param primaryemail The primary email (String) of the user
      */
-    public User(
-        String username,
-        String password,
-        String primaryemail)
-    {
-        setUsername(username);
-        setPassword(password);
-        this.primaryemail = primaryemail;
-    }
+
+//
+//    public User(String username,
+//                String password,
+//                @Email String primaryemail,
+//                List<Todo> todos) {
+//        this.username = username;
+//        this.password = password;
+//        this.primaryemail = primaryemail;
+//        this.todos = todos;
+//    }
 
     /**
      * Getter for userid
@@ -167,11 +178,18 @@ public class User
         this.password = password;
     }
 
-    public List<Todo> getTodos() {
+    public List<Todo> getTodos()
+    {
         return todos;
     }
 
-    public void setTodos(List<Todo> todos) {
+    public void setTodos(List<Todo> todos)
+    {
         this.todos = todos;
+    }
+
+    public void addTodo(Todo todo)
+    {
+        this.todos.add(todo);
     }
 }

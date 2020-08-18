@@ -3,7 +3,7 @@ package com.lambdaschool.todos;
 
 import com.lambdaschool.todos.models.Todo;
 import com.lambdaschool.todos.models.User;
-import com.lambdaschool.todos.services.TodosService;
+import com.lambdaschool.todos.services.TodoServices;
 import com.lambdaschool.todos.services.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -27,7 +27,7 @@ public class SeedData implements CommandLineRunner
     private UserServices userServices;
 
     @Autowired
-    private TodosService todosServices;
+    private TodoServices todoServices;
 
     /**
      * Generates test, seed data for our application
@@ -43,48 +43,43 @@ public class SeedData implements CommandLineRunner
     public void run(String[] args) throws Exception
     {
         User u1 = new User("admin",
-                           "password",
-                           "admin@lambdaschool.local");
+                "password",
+                "admin@lambdaschool.local");
         u1.getTodos()
                 .add(new Todo(u1,
-                               "Give Joe access rights"));
+                        "Give Joe access rights"));
         u1.getTodos()
                 .add(new Todo(u1,
-                               "Change the color of the home page"));
-
+                        "Change the color of the home page"));
         userServices.save(u1);
-
         User u2 = new User("cinnamon",
-                           "1234567",
-                           "cinnamon@lambdaschool.local");
+                "1234567",
+                "cinnamon@lambdaschool.local");
         u2.getTodos()
                 .add(new Todo(u2,
-                               "Take a nap"));
+                        "Take a nap"));
         u2.getTodos()
                 .add(new Todo(u2,
-                               "Rearrange my hutch"));
+                        "Rearrange my hutch"));
         u2.getTodos()
                 .add(new Todo(u2,
-                               "Groom my fur"));
+                        "Groom my fur"));
         userServices.save(u2);
-
         // user
         User u3 = new User("barnbarn",
-                           "ILuvM4th!",
-                           "barnbarn@lambdaschool.local");
+                "ILuvM4th!",
+                "barnbarn@lambdaschool.local");
         u3.getTodos()
                 .add(new Todo(u3,
-                               "Rearrange my hutch"));
+                        "Rearrange my hutch"));
         userServices.save(u3);
-
         User u4 = new User("puttat",
-                           "password",
-                           "puttat@school.lambda");
+                "password",
+                "puttat@school.lambda");
         userServices.save(u4);
-
         User u5 = new User("misskitty",
-                           "password",
-                           "misskitty@school.lambda");
+                "password",
+                "misskitty@school.lambda");
         userServices.save(u5);
     }
 }
